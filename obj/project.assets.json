@@ -39,11 +39,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Integrations\\NI\\ENc\\ENc.csproj",
+      "projectUniqueName": "E:\\Integrations\\NI\\RSA pin encryption\\ENc.csproj",
       "projectName": "ENc",
-      "projectPath": "E:\\Integrations\\NI\\ENc\\ENc.csproj",
+      "projectPath": "E:\\Integrations\\NI\\RSA pin encryption\\ENc.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "E:\\Integrations\\NI\\ENc\\obj\\",
+      "outputPath": "E:\\Integrations\\NI\\RSA pin encryption\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"

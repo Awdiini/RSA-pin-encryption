@@ -15,3 +15,21 @@ E:\Integrations\NI\ENc\obj\Debug\net9.0\refint\ENc.dll
 E:\Integrations\NI\ENc\obj\Debug\net9.0\ENc.pdb
 E:\Integrations\NI\ENc\obj\Debug\net9.0\ENc.genruntimeconfig.cache
 E:\Integrations\NI\ENc\obj\Debug\net9.0\ref\ENc.dll
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.csproj.AssemblyReference.cache
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.GeneratedMSBuildEditorConfig.editorconfig
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.AssemblyInfoInputs.cache
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.AssemblyInfo.cs
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.csproj.CoreCompileInputs.cache
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.sourcelink.json
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.dll
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\refint\ENc.dll
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.pdb
+E:\Integrations\NI\RSA pin encryption\bin\Debug\net9.0\ENc.exe
+E:\Integrations\NI\RSA pin encryption\bin\Debug\net9.0\ENc.deps.json
+E:\Integrations\NI\RSA pin encryption\bin\Debug\net9.0\ENc.runtimeconfig.json
+E:\Integrations\NI\RSA pin encryption\bin\Debug\net9.0\ENc.dll
+E:\Integrations\NI\RSA pin encryption\bin\Debug\net9.0\ENc.pdb
+E:\Integrations\NI\RSA pin encryption\bin\Debug\net9.0\BouncyCastle.Crypto.dll
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.csproj.Up2Date
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ENc.genruntimeconfig.cache
+E:\Integrations\NI\RSA pin encryption\obj\Debug\net9.0\ref\ENc.dll
