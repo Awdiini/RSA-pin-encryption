@@ -1,68 +1,59 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Text;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.X509;
-using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
+using System.Security.Cryptography;
 
-public class PinEncryption
+namespace main
 {
-    public static string EncryptPin(string pin, string cardNumber, string publicKeyBase64)
+    public static class PinEncryption
     {
-        try
+        public static string EncryptPin(string PIN, string CardNumber, string PublicKey)
         {
-            // Create Hex PIN Block
-            string pinHex = pin.Length.ToString("X").PadLeft(2, '0') + pin.PadRight(15, 'F');
-            
-            // Create Hex Card Lock
-            string cardHex = "0000" + cardNumber.Substring(cardNumber.Length - 12);
-            
-            // Perform XOR operation
-            long pinDecimal = Convert.ToInt64(pinHex, 16);
-            long cardDecimal = Convert.ToInt64(cardHex, 16);
-            long xorResult = pinDecimal ^ cardDecimal;
-            
-            string xorHex = xorResult.ToString("X").PadLeft(16, '0');
-            
-            // Convert Hex Result to Byte Array
-            byte[] bytes = new byte[xorHex.Length / 2];
-            for (int i = 0; i < xorHex.Length; i += 2)
+            string hexPINBlock = (("0" + PIN.Length + PIN).PadRight(16, 'F'));
+            CardNumber = CardNumber.Substring(0, CardNumber.Length - 1); 
+            string hexCardlock = ("0000" + CardNumber.Substring(CardNumber.Length - 12));
+            long dec1 = Convert.ToInt64(hexPINBlock, 16);
+            long dec2 = Convert.ToInt64(hexCardlock, 16);
+            long result = dec1 ^ dec2;
+            string hexResult = result.ToString("X");
+
+            if (hexResult.Length < 16)
             {
-                bytes[i / 2] = Convert.ToByte(xorHex.Substring(i, 2), 16);
+                hexResult = "0" + hexResult;
             }
-            
-            // Load and parse the public key
-            byte[] publicKeyBytes = Convert.FromBase64String(publicKeyBase64);
+            int NumberChars = hexResult.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hexResult.Substring(i, 2), 16);
+            }
+
+            string hexStringResult = BitConverter.ToString(bytes).Replace("-", "");
+            byte[] publicKeyBytes = Convert.FromBase64String(PublicKey);  //KINDLY GET "PublicKey" from GetPublicKey API
+            RsaKeyParameters rsaKeyParameters;
             Asn1Object asn1Object;
             using (var stream = new Asn1InputStream(publicKeyBytes))
             {
                 asn1Object = stream.ReadObject();
+                rsaKeyParameters = PublicKeyFactory.CreateKey(SubjectPublicKeyInfo.GetInstance(asn1Object)) as RsaKeyParameters;
             }
-            
-            var rsaKeyParameters = PublicKeyFactory.CreateKey(SubjectPublicKeyInfo.GetInstance(asn1Object)) as RsaKeyParameters;
-            
-            var rsaParams = new RSAParameters
+            RSAParameters rSAParameters = new RSAParameters
             {
                 Modulus = rsaKeyParameters.Modulus.ToByteArrayUnsigned(),
                 Exponent = rsaKeyParameters.Exponent.ToByteArrayUnsigned()
             };
-            
-            using (var rsa = new RSACryptoServiceProvider())
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
             {
-                rsa.ImportParameters(rsaParams);
-                
-                // Use PKCS#1 v1.5 padding if that’s the vendor’s requirement
-                byte[] encryptedBytes = rsa.Encrypt(bytes, RSAEncryptionPadding.Pkcs1);
-                
-                return Convert.ToBase64String(encryptedBytes);
+                rsa.ImportParameters(rSAParameters);
+                byte[] plainBytes = Encoding.UTF8.GetBytes(hexStringResult);
+                bool OAEP = false; // or true, depending on your specific use case
+                byte[] encryptedBytes = rsa.Encrypt(plainBytes, OAEP);
+                string encryptedText = Convert.ToBase64String(encryptedBytes);
+                return encryptedText;
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error: " + ex.Message);
-            return null;
         }
     }
 }
